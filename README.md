@@ -21,21 +21,21 @@ Following 5 epochs of staged fine-tuning on the highly imbalanced MELD dataset, 
 
 ---
 
-## 🧠 System Architecture
+## System Architecture
 
 The model implements a **Late Fusion Transformer** approach. Instead of simple vector concatenation, it projects modality-specific features into a shared embedding space ($d=768$) and utilizes a Transformer Encoder to learn complex inter-modality correlations.
 
-### 🔹 Foundation Encoders
+### Foundation Encoders
 * **Text:** `bert-base-uncased` — Extracts semantic and contextual linguistic features.
 * **Audio:** `facebook/wav2vec2-base` — Extracts acoustic properties and prosody from raw 16kHz waveforms.
 * **Vision:** `google/vit-base-patch16-224` — Processes sampled video frames via Vision Transformer spatiotemporal patches.
 
-### 🔹 Fusion Logic
+### Fusion Logic
 The system uses a **4-layer Transformer Encoder** (8 attention heads) to perform cross-modal reasoning. This allows the network to dynamically weigh, for example, the importance of a specific spoken word against a micro-expression or vocal tone. The output is mean-pooled and passed through an MLP classifier with Dropout ($0.3$).
 
 ---
 
-## 🔥 Engineering Highlights
+## Engineering Highlights
 
 * **Mixed Precision Training (AMP):** Utilizes `torch.amp.GradScaler` to optimize GPU memory footprint and increase throughput, critical for training large multimodal networks on consumer-grade hardware.
 * **Staged Fine-Tuning Strategy:** To stabilize training, the system uses a 2-epoch "Encoder Freeze." The cross-modal fusion head is warmed up first, followed by full-model unfreezing to refine the foundation backbone weights without catastrophic forgetting.
@@ -44,7 +44,7 @@ The system uses a **4-layer Transformer Encoder** (8 attention heads) to perform
 
 ---
 
-## 🏗 Project Structure
+## Project Structure
 
 ```text
 multimodal-emotion-recognition/
@@ -68,7 +68,7 @@ multimodal-emotion-recognition/
 
 ---
 
-## ⚙️ Installation & Usage
+## Installation & Usage
 
 ### 1. Requirements
 Ensure you are running Python 3.10+ and have a CUDA-enabled GPU.
@@ -90,7 +90,7 @@ python main.py
 
 ---
 
-## 🧪 Ablation Study Support
+## Ablation Study Support
 The architecture is designed for modularity. You can toggle modalities in `model.py` to validate the effectiveness of the cross-modal fusion:
 ```python
 # Example: Audio-Visual only (Ablating Text)
